@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 from gl import Renderer
+from buffer import Buffer
 
 
 width = 960
@@ -14,9 +15,23 @@ clock = pygame.time.Clock()
 
 rend = Renderer(screen)
 
+triangle = [-0.5, -0.5, 0.0,
+            0.0, 0.5, 0.0,
+            0.5, -0.5, 0.0]
+
+
+rend.scene.append(Buffer(triangle))
+
+
 
 isRunning = True
 while isRunning:
+
+    deltaTime = clock.tick(60) / 1000
+    keys  = pygame.key.get_pressed()
+    
+
+
     for event in pygame.event.get():
         if  event.type == pygame.quit:
             isRunning = False
@@ -25,8 +40,31 @@ while isRunning:
                 isRunning = False
         
     
-    deltaTime = clock.tick(60) / 1000
+    if keys[K_RIGHT]:
+        if rend.clearColor[0] < 1.0:
+            rend.clearColor[0] += deltaTime
+    elif keys[K_LEFT]:
+        if rend.clearColor[0] > 0.0:
+            rend.clearColor[0] -= deltaTime
+
+    
+    if keys[K_UP]:
+        if rend.clearColor[1] < 1.0:
+            rend.clearColor[1] += deltaTime
+    elif keys[K_DOWN]:
+        if rend.clearColor[1] > 0.0:
+            rend.clearColor[1] -= deltaTime
+
+
+    if keys[K_z]:
+        if rend.clearColor[2] < 1.0:
+            rend.clearColor[2] += deltaTime
+    elif keys[K_x]:
+        if rend.clearColor[2] > 0.0:
+            rend.clearColor[2] -= deltaTime
+    
     
     rend.render()
     pygame.display.flip()
 pygame.quit()
+.0
