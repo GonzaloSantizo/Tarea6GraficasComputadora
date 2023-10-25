@@ -27,7 +27,7 @@ class Buffer(object):
                      self.vertBuffer,
                      GL_STATIC_DRAW)
         
-        #Atributos: especificar contenidos del vertice
+        #Atributos posiciones: especificar contenidos del vertice
         #1. Att number
         #2. Size
         #3. Type
@@ -38,9 +38,28 @@ class Buffer(object):
                               3,
                               GL_FLOAT,
                               GL_FALSE,
-                              4 * 3,
+                              4 * 6,
                               ctypes.c_void_p(0))
         
         glEnableVertexAttribArray(0)
+        
 
-        glDrawArrays(GL_TRIANGLES, 0, int(len(self.vertBuffer / 3)))
+        #Atributos colores: especificar contenidos del vertice
+        #1. Att number
+        #2. Size
+        #3. Type
+        #4. Is it normalized?
+        #5. Stride (deslizamiento)
+        #6. Offset
+        glVertexAttribPointer(1,
+                              3,
+                              GL_FLOAT,
+                              GL_FALSE,
+                              4 * 6,
+                              ctypes.c_void_p(4*3))
+        
+
+        
+        glEnableVertexAttribArray(1)
+
+        glDrawArrays(GL_TRIANGLES, 0, int(len(self.vertBuffer) / 6))

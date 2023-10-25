@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 from gl import Renderer
 from buffer import Buffer
+from shaders import *
 
 
 width = 960
@@ -14,10 +15,13 @@ clock = pygame.time.Clock()
 
 
 rend = Renderer(screen)
+rend.setShader(vertex_shader, fragmet_shader)
 
-triangle = [-0.5, -0.5, 0.0,
-            0.0, 0.5, 0.0,
-            0.5, -0.5, 0.0]
+#              position           color
+triangle = [-0.5, -0.5, 0.0, 1.0, 0.0, 0.0,
+            0.0, 0.5, 0.0, 0.0, 1.0, 0.0,
+            0.5, -0.5, 0.0, 0.0, 0.0, 1.0]
+
 
 
 rend.scene.append(Buffer(triangle))
@@ -33,7 +37,7 @@ while isRunning:
 
 
     for event in pygame.event.get():
-        if  event.type == pygame.quit:
+        if  event.type == pygame.QUIT:
             isRunning = False
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
