@@ -17,10 +17,10 @@ clock = pygame.time.Clock()
 rend = Renderer(screen)
 rend.setShader(vertex_shader, fragmet_shader)
 
-#              position           color
-triangle = [-0.5, -0.5, 0.0, 1.0, 0.0, 0.0,
-            0.0, 0.5, 0.0, 0.0, 1.0, 0.0,
-            0.5, -0.5, 0.0, 0.0, 0.0, 1.0]
+#              position                   color
+triangle = [-0.5, -0.5, 0.0,            1.0, 0.0, 0.0,
+             0.0, 0.5, 0.0,             0.0, 1.0, 0.0,
+             0.5, -0.5, 0.0,            0.0, 0.0, 1.0]
 
 
 
@@ -60,10 +60,10 @@ while isRunning:
             rend.clearColor[1] -= deltaTime
 
 
-    if keys[K_z]:
+    if keys[K_x]:
         if rend.clearColor[2] < 1.0:
             rend.clearColor[2] += deltaTime
-    elif keys[K_x]:
+    elif keys[K_z]:
         if rend.clearColor[2] > 0.0:
             rend.clearColor[2] -= deltaTime
     
