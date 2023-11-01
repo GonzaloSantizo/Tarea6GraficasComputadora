@@ -11,15 +11,21 @@ class Renderer(object):
         self.clearColor = [0,0,0]
 
         glEnable(GL_DEPTH_TEST)
+        glCullFace(GL_FRONT)
         
         glViewport(0,0, self.width, self.height)
 
-        self.scene = []
-
-        self.activeShader = None
-
 
         self.elapsedTime  = 0.0
+        
+
+
+        self.scene = []
+        self.activeShader = None
+        
+        self.dirLight = glm.vec3(0,0,-1)
+
+
 
 
         #View Matrix
@@ -71,6 +77,8 @@ class Renderer(object):
 
 
             glUniform1f(glGetUniformLocation(self.activeShader, "time"), self.elapsedTime,  )
+            
+            glUniform3fv( glGetUniformLocation (self.activeShader, "dirLight"), 1, glm.value_ptr(self.dirLight))
 
             
 

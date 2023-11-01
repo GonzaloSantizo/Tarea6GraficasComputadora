@@ -18,14 +18,14 @@ clock = pygame.time.Clock()
 rend = Renderer(screen)
 rend.setShader(vertex_shader, fragmet_shader)
 
-#                   position                   color                 UV
-triangleData = [-0.5, -0.5, 0.0,            1.0, 0.0, 0.0,        0.0, 0.0,
-                -0.5, 0.5, 0.0,             0.0, 1.0, 0.0,        0.0, 1.0,
-                 0.5, -0.5, 0.0,            0.0, 0.0, 1.0,        1.0, 0.0,
+#                   position               UV              Normals
+triangleData = [-0.5, -0.5, 0.0,        0.0, 0.0,       0.0, 0.0, 1.0,
+                -0.5,  0.5, 0.0,        0.0, 1.0,       0.0, 0.0, 1.0,
+                 0.5, -0.5, 0.0,        1.0, 0.0,       0.0, 0.0, 1.0,
                                                                   
-                -0.5, 0.5, 0.0,             0.0, 1.0, 0.0,        0.0, 1.0,
-                 0.5, 0.5, 0.0,             0.0, 1.0, 1.0,        1.0, 1.0,
-                 0.5, -0.5, 0.0,            0.0, 0.0, 1.0,        1.0, 0.0]
+                -0.5, 0.5, 0.0,         0.0, 1.0,       0.0, 0.0, 1.0,
+                 0.5, 0.5, 0.0,         1.0, 1.0,       0.0, 0.0, 1.0,
+                 0.5, -0.5, 0.0,        1.0, 0.0,       0.0, 0.0, 1.0]
 
 
 
@@ -55,9 +55,9 @@ while isRunning:
                 isRunning = False
         
     
-    if keys[K_d]:
+    if keys[K_a]:
         rend.camPosition.x += 5 * deltaTime
-    elif keys[K_a]:
+    elif keys[K_d]:
         rend.camPosition.x -= 5 * deltaTime
 
     

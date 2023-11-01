@@ -73,9 +73,10 @@ class Model(object):
                               ctypes.c_void_p(0))
         
         glEnableVertexAttribArray(0)
+       
         
 
-        #Atributos colores: especificar contenidos del vertice
+        #Atributos de cordenada de textura
         #1. Att number
         #2. Size
         #3. Type
@@ -83,7 +84,7 @@ class Model(object):
         #5. Stride (deslizamiento)
         #6. Offset
         glVertexAttribPointer(1,
-                              3,
+                              2,
                               GL_FLOAT,
                               GL_FALSE,
                               4 * 8,
@@ -94,7 +95,7 @@ class Model(object):
         glEnableVertexAttribArray(1)
         
 
-        #Atributos de cordenada de textura
+        #Atributos de normales
         #1. Att number
         #2. Size
         #3. Type
@@ -102,15 +103,16 @@ class Model(object):
         #5. Stride (deslizamiento)
         #6. Offset
         glVertexAttribPointer(2,
-                              2,
+                              3,
                               GL_FLOAT,
                               GL_FALSE,
                               4 * 8,
-                              ctypes.c_void_p(4*6))
+                              ctypes.c_void_p(4*5))
         
 
         
         glEnableVertexAttribArray(2)
+        
         
         #Activar texturas
         glActiveTexture( GL_TEXTURE0 )
