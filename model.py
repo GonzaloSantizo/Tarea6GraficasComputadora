@@ -1,7 +1,9 @@
 from OpenGL.GL import *
 import glm
 from OpenGL.GL import *
+from pygame.display import flip
 from numpy import array, float32
+import pygame
 
 class Model(object):
     def __init__(self, data):
@@ -31,6 +33,13 @@ class Model(object):
         scaleMat = glm.scale(identity, self.scale)
 
         return  translateMat * rotationMat * scaleMat
+    
+
+    def loadTexture(self, textureName):
+        self.textureSurface =  pygame.image.load(textureName)
+        self.textureData = pygame.image.tostring(self.textureSurface, "RGB", True)
+        self.textureBuffer = glGenTextures(1)
+        
 
 
     def render(self):
@@ -60,7 +69,7 @@ class Model(object):
                               3,
                               GL_FLOAT,
                               GL_FALSE,
-                              4 * 6,
+                              4 * 8,
                               ctypes.c_void_p(0))
         
         glEnableVertexAttribArray(0)
@@ -77,11 +86,60 @@ class Model(object):
                               3,
                               GL_FLOAT,
                               GL_FALSE,
-                              4 * 6,
+                              4 * 8,
                               ctypes.c_void_p(4*3))
         
 
         
         glEnableVertexAttribArray(1)
+        
 
-        glDrawArrays(GL_TRIANGLES, 0, int(len(self.vertBuffer) / 6))
+        #Atributos de cordenada de textura
+        #1. Att number
+        #2. Size
+        #3. Type
+        #4. Is it normalized?
+        #5. Stride (deslizamiento)
+        #6. Offset
+        glVertexAttribPointer(2,
+                              2,
+                              GL_FLOAT,
+                              GL_FALSE,
+                              4 * 8,
+                              ctypes.c_void_p(4*6))
+        
+
+        
+        glEnableVertexAttribArray(2)
+        
+        #Activar texturas
+        glActiveTexture( GL_TEXTURE0 )
+        # Bind the texture to a valid target, such as GL_TEXTURE_2D
+        glBindTexture(GL_TEXTURE_2D, self.textureBuffer)
+
+        
+        
+        #1. Tipo de textura
+        #2. Position
+        #3. Format
+        #4. Ancho
+        #5. Alto
+        #6. Border
+        #7. format
+        #8. type
+        #9. Data
+        glTexImage2D(GL_TEXTURE_2D,  # Use GL_TEXTURE_2D for 2D textures
+        0,
+        GL_RGB,
+        self.textureSurface.get_width(),
+        self.textureSurface.get_height(),
+        0,
+        GL_RGB,
+        GL_UNSIGNED_BYTE,
+        self.textureData)
+
+        
+        
+        glGenerateTextureMipmap(self.textureBuffer)
+
+        glDrawArrays(GL_TRIANGLES, 0, int(len(self.vertBuffer) / 8))

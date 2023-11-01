@@ -11,6 +11,7 @@ class Renderer(object):
         self.clearColor = [0,0,0]
 
         glEnable(GL_DEPTH_TEST)
+        
         glViewport(0,0, self.width, self.height)
 
         self.scene = []
@@ -66,7 +67,8 @@ class Renderer(object):
 
             glUniformMatrix4fv(glGetUniformLocation(self.activeShader, "viewMatrix"), 1, GL_FALSE, glm.value_ptr(self.getViewMatrix()))
 
-            glUniformMatrix4fv(glGetUniformLocation(self.activeShader, "projectionMatrix"), 1, GL_FALSE, glm.value_ptr(self.projectionMatrix()))
+            glUniformMatrix4fv(glGetUniformLocation(self.activeShader, "projectionMatrix"), 1, GL_FALSE, glm.value_ptr(self.projectionMatrix))
+
 
             glUniform1f(glGetUniformLocation(self.activeShader, "time"), self.elapsedTime,  )
 
@@ -74,7 +76,8 @@ class Renderer(object):
 
         for obj in self.scene:
             if self.activeShader is not None:
-                glUniformMatrix4fv(glGetUniformLocation(self.activeShader, "modelMatrix"), 1, GL_FALSE, glm.value_ptr(self.getModelMatrix()))
+                glUniformMatrix4fv(glGetUniformLocation(self.activeShader, "modelMatrix"), 1, GL_FALSE, glm.value_ptr(obj.getModelMatrix()))
+
 
             obj.render()
 
